@@ -4,6 +4,8 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay } from 'swiper/modules';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+
 
 // Function to render stars based on rating
 const renderStars = (rating) => {
@@ -11,9 +13,11 @@ const renderStars = (rating) => {
 };
 
 function Review() {
+
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [name, setName] = useState('');
+  const axiosPublic = useAxiosPublic()
   
   const reviews = [
     {
@@ -75,7 +79,8 @@ function Review() {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto py-16 px-4">
+    <div className=''>
+      <div className="max-w-screen-lg mx-auto py-16 px-4">
       <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Customer Reviews</h2>
 
       <Swiper
@@ -152,6 +157,7 @@ function Review() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }
