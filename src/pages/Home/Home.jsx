@@ -3,6 +3,7 @@ import Banner from '../../components/Banner/Banner';
 import Review from '../../components/Review/Review';
 import OurTeam from '../../components/OurTeam/OurTeam';
 import Download from '../../components/Download/Download';
+import Video from '../../components/Video/Video';
 
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
       <Review />
       <OurTeam />
       <Download />
+      <Video></Video>
       <div>
       <div>
       <section id="home" >

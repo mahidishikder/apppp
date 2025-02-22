@@ -19,7 +19,7 @@ function Navbar() {
   const handleNavigation = (section) => {
     setIsMenuOpen(false); // Close menu on navigation (mobile UX improvement)
     if (location.pathname !== "/") {
-      navigate("/");
+      navigate("/"); 
       setTimeout(() => {
         document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -39,20 +39,6 @@ function Navbar() {
     }
   };
 
-  const links = (
-    <>
-      {['home', 'download', 'review', 'ourTeam'].map((section) => (
-        <span
-          key={section}
-          onClick={() => handleNavigation(section)}
-          className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
-        >
-          {section.toUpperCase()}
-        </span>
-      ))}
-    </>
-  );
-
   return (
     <>
       <ToastContainer />
@@ -65,14 +51,45 @@ function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex space-x-5 items-center">
-            {links}
+            {/* Home Link */}
+            <span
+              onClick={() => handleNavigation('home')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              HOME
+            </span>
+
+            {/* Download Link */}
+            <span
+              onClick={() => handleNavigation('download')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              DOWNLOAD
+            </span>
+
+            {/* Review Link */}
+            <span
+              onClick={() => handleNavigation('review')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              REVIEW
+            </span>
+
+            {/* Our Team Link */}
+            <span
+              onClick={() => handleNavigation('ourTeam')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              OUR TEAM
+            </span>
+
             {user ? (
               <div className="flex items-center space-x-3">
                 {/* Profile Image with Link to Dashboard */}
                 <NavLink to="/dashboard">
                   <img src={user.photoURL} alt="User Avatar" className="h-8 w-8 rounded-full cursor-pointer" />
                 </NavLink>
-                <button onClick={handleLogout} className="bg-red-400 py-2 px-3 rounded ">Logout</button>
+                <button onClick={handleLogout} className="bg-red-400 py-2 px-3 rounded">Logout</button>
               </div>
             ) : (
               <NavLink to="/login">
@@ -92,7 +109,38 @@ function Navbar() {
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
           <div className="lg:hidden absolute top-16 left-0 w-full bg-gray-100 shadow-md p-5 z-50 flex flex-col items-center space-y-5">
-            {links}
+            {/* Home Link */}
+            <span
+              onClick={() => handleNavigation('home')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              HOME
+            </span>
+
+            {/* Download Link */}
+            <span
+              onClick={() => handleNavigation('download')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              DOWNLOAD
+            </span>
+
+            {/* Review Link */}
+            <span
+              onClick={() => handleNavigation('review')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              REVIEW
+            </span>
+
+            {/* Our Team Link */}
+            <span
+              onClick={() => handleNavigation('ourTeam')}
+              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+            >
+              OUR TEAM
+            </span>
+
             {user ? (
               <div className="flex flex-col items-center space-y-3">
                 <NavLink to="/dashboard">
