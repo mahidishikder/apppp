@@ -1,0 +1,13 @@
+.active {
+  color: #1d4ed8; /* একটিভ লিঙ্কের রং */
+  font-weight: 600; /* একটিভ লিঙ্কের ফন্টের ওজন */
+}
+/* style.css */
+/* style.css */
+.sticky-navbar {
+  position: fixed; /* Use fixed instead of sticky */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
