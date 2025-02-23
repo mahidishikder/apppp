@@ -3,6 +3,8 @@ import { Outlet, Link } from "react-router-dom";
 import { Menu, X, Home, Settings, User, Image, Star, Grid, Plus } from "lucide-react"; // Replace Banner with Image
 
 function Dashboard() {
+  // todo
+  const isAdmin = true
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -22,33 +24,113 @@ function Dashboard() {
         </div>
 
         {/* Sidebar Menu */}
-        <nav className="space-y-4">
-        <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/dashboard">
-        <Grid size={20} /> {/* Dashboard Icon */}
-        <span>Dashboard</span>
-      </Link>
-          <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/dashboard/profile">
-            <User size={20} />
-            <span>Profile</span>
+        <nav className="space-y-6 ">
+         {
+          isAdmin ? 
+          <>
+           <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard"
+          >
+            <Grid size={22} className="text-white" />
+            <span className="text-lg font-semibold">Dashboard</span>
           </Link>
-          <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/dashboard/addBanner">
-  <Plus size={20} /> {/* Plus icon */}
-  <span>Add Banner</span>
-</Link>
-          <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/dashboard/manageBanner">
-            <Image size={20} /> {/* Replaced Banner with Image */}
-            <span>Manage Banner</span>
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/profile"
+          >
+            <User size={22} className="text-white" />
+            <span className="text-lg font-semibold">Admin Profile</span>
           </Link>
-          <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/dashboard/manageReview">
-            <Star size={20} /> {/* Use an icon for Manage Review */}
-            <span>Manage Review</span>
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/addBanner"
+          >
+            <Plus size={22} className="text-white" />
+            <span className="text-lg font-semibold">Add Banner</span>
           </Link>
-          <div className="divider">or</div>
-          <Link className="flex items-center space-x-3 p-3 hover:bg-blue-700 rounded-lg" to="/">
-            <Home size={20} />
-            <span>Home</span>
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/manageBanner"
+          >
+            <Image size={22} className="text-white" />
+            <span className="text-lg font-semibold">Manage Banner</span>
           </Link>
-        
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/manageReview"
+          >
+            <Star size={22} className="text-white" />
+            <span className="text-lg font-semibold">Manage Review</span>
+          </Link>
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/allUser"
+          >
+            <Star size={22} className="text-white" />
+            <span className="text-lg font-semibold">All User</span>
+          </Link>
+
+          <div className="border-t-2 border-gray-400 mt-6"></div> {/* Divider */}
+          
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/"
+          >
+            <Home size={22} className="text-white" />
+            <span className="text-lg font-semibold">Home</span>
+          </Link>
+          </> 
+          : 
+          <>
+           <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard"
+          >
+            <Grid size={22} className="text-white" />
+            <span className="text-lg font-semibold">Dashboard</span>
+          </Link>
+
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/dashboard/profile"
+          >
+            <User size={22} className="text-white" />
+            <span className="text-lg font-semibold">User Profile</span>
+          </Link>
+
+         
+
+         
+
+          
+
+          <div className="border-t-2 border-gray-400 mt-6"></div> {/* Divider */}
+          
+          <Link
+            onClick={() => setIsOpen(false)} // Close the menu when clicked
+            className="flex items-center space-x-4 p-4 hover:bg-blue-800 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+            to="/"
+          >
+            <Home size={22} className="text-white" />
+            <span className="text-lg font-semibold">Home</span>
+          </Link>
+          </>
+         }
         </nav>
       </div>
 

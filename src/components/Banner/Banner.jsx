@@ -1,4 +1,3 @@
-import React from "react";
 import { GoArrowUpRight } from "react-icons/go";
 import { Typewriter } from "react-simple-typewriter";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,17 +5,21 @@ import { Autoplay } from "swiper/modules"; // Swiper Modules
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const images = [
-  "https://demo-2.busymart24.shop/frontend/images/header-phone.png",
-  "https://demo-2.busymart24.shop/frontend/images/header-phone.png",
-  "https://demo-2.busymart24.shop/frontend/images/header-phone.png",
-  "https://demo-2.busymart24.shop/frontend/images/header-phone.png",
-  "https://demo-2.busymart24.shop/frontend/images/header-phone.png",
-
-];
+import useBanner from "../../hooks/useBanner";
 
 const Banner = () => {
+  const [imagesB, refetch] = useBanner(); // API থেকে ডাটা নিচ্ছি
+
+  // ✅ ঠিকমতো Image URLs বের করা
+  const imageUrls =
+    imagesB && Array.isArray(imagesB)
+      ? imagesB.flatMap((item) =>
+          item.images ? item.images.map((img) => img.imageUrl) : []
+        )
+      : [];
+
+  console.log("✅ Extracted Image URLs:", imageUrls); // Debugging জন্য
+
   return (
     <div
       id="home"
@@ -45,7 +48,7 @@ const Banner = () => {
             </span>
           </h1>
           <p className="text-lg md:text-xl mb-8 text-gray-500">
-            ম্যাচ 3 গেমটি এই আশ্চর্যজনক গেমটি খেলে আপনার মোবাইল ফোন  থেকে অর্থ উপার্জন করার জন্য। এখনই ডাউনলোড করুন!
+            ম্যাচ 3 গেমটি এই আশ্চর্যজনক গেমটি খেলে আপনার মোবাইল ফোন থেকে অর্থ উপার্জন করার জন্য। এখনই ডাউনলোড করুন!
           </p>
           <button className="btn btn-primary px-10 py-4 rounded-full flex items-center gap-2 mx-auto md:mx-0">
             DOWNLOAD APK <GoArrowUpRight className="text-2xl" />
@@ -54,27 +57,31 @@ const Banner = () => {
 
         {/* Right Side - Swiper Image */}
         <div className="w-full md:w-1/2 flex justify-center">
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 2000, // 2 সেকেন্ড পর পর চেঞ্জ হবে
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay]} // Swiper Autoplay Module
-            className="max-w-xs md:max-w-md"
-          >
-            {images.map((img, index) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={img}
-                  alt={`Slide ${index + 1}`}
-                  className="max-w-full h-auto animate-float"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {imageUrls.length > 0 ? (
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000, // ✅ 2 সেকেন্ড পর পর চেঞ্জ হবে
+                disableOnInteraction: false, // ইউজার ক্লিক করলেও চলতে থাকবে
+              }}
+              modules={[Autoplay]} // ✅ Autoplay Module ঠিকমতো যোগ করা হয়েছে
+              className="max-w-xs md:max-w-md"
+            >
+              {imageUrls.map((url, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    src={url}
+                    alt={`Slide ${index + 1}`}
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <p className="text-gray-500">No images available</p>
+          )}
         </div>
       </div>
     </div>

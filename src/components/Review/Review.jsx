@@ -4,7 +4,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay } from 'swiper/modules';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { toast } from 'react-toastify';
 
 
 // Function to render stars based on rating
@@ -17,7 +17,6 @@ function Review() {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [name, setName] = useState('');
-  const axiosPublic = useAxiosPublic()
   
   const reviews = [
     {
@@ -61,8 +60,7 @@ function Review() {
     setName(e.target.value);
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newReview = {
       text: reviewText,
@@ -70,13 +68,34 @@ function Review() {
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuNhTZJTtkR6b-ADMhmzPvVwaLuLdz273wvQ&s",
       rating
     };
-    console.log("Submitted Review:", newReview);
-    
-    // Reset form
-    setName('');
-    setReviewText('');
-    setRating(0);
+  
+    try {
+      const response = await fetch("http://localhost:5000/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newReview)
+      });
+  
+      const data = await response.json();
+      
+      if (data.insertedId) {
+        toast.success("Review posted successfully! 🎉");
+        setName('');
+        setReviewText('');
+        setRating(0);
+      } else {
+        toast.error("Failed to post review! ❌");
+      }
+  
+    } catch (error) {
+      console.error("Error posting review:", error);
+      toast.error("Something went wrong! ❌");
+    }
   };
+  
+  
 
   return (
     <div className=''>

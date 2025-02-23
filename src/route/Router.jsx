@@ -14,6 +14,7 @@ import ManageBanner from "../pages/Dashborad/ManageBanner/ManageBanner";
 import ManageReview from "../pages/Dashborad/ManageReview/ManageReview";
 import DashboardInfo from "../pages/Dashborad/DashboardInfo/DashboardInfo";
 import AddBanner from "../pages/Dashborad/AddBanner/AddBanner";
+import AllUser from "../pages/Dashborad/DashboardInfo/AllUser/AllUser";
 
 
 export  const router = createBrowserRouter([
@@ -59,6 +60,10 @@ export  const router = createBrowserRouter([
     {
       path:'',
       element:<DashboardInfo></DashboardInfo>
+    },
+    {
+      path:'allUser',
+      element:<AllUser></AllUser>
     }
   ]
   }

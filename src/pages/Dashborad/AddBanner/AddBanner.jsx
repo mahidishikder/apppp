@@ -3,91 +3,95 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AddBanner() {
-  const [title1, setTitle1] = useState('');
-  const [title2, setTitle2] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageLink, setImageLink] = useState('');
+  const [imageFiles, setImageFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleImageLinkChange = (e) => {
-    setImageLink(e.target.value);
+  const handleImageChange = (e) => {
+    setImageFiles([...e.target.files]); // Store multiple images
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Here, you can handle the form submission, e.g., sending data to the backend
-    console.log('Banner Data:', { title1, title2, description, imageLink });
+
+    if (imageFiles.length === 0) {
+      toast.error('Please select images');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const uploadedImages = [];
+
+      for (const imageFile of imageFiles) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        const apiKey = '9e0c792ec996a592b128e8421f7d10d2'; // Replace with your actual API key
+
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          const imageUrl = data.data.url; // Get the image URL
+
+          // Add the image URL to the uploadedImages array
+          uploadedImages.push({
+            imageUrl,
+          });
+        } else {
+          toast.error('Failed to upload image.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Once all images are uploaded, send the data to your backend
+      const response = await fetch('http://localhost:5000/imagesB', {
+        method: 'POST',
+        body: JSON.stringify({ images: uploadedImages }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const backendData = await response.json();
+
+      if (response.ok) {
+        toast.success('Images uploaded and data sent successfully!');
+        console.log('Backend Response:', backendData);
+      } else {
+        toast.error('Failed to send data to the backend.');
+      }
+
+    } catch (error) {
+      toast.error('An error occurred while uploading the images.');
+    } finally {
+      setLoading(false);
+    }
 
     // Reset the form fields
-    setTitle1('');
-    setTitle2('');
-    setDescription('');
-    setImageLink('');
-
-    // Show success toast
-    toast.success('Banner added successfully!');
+    setImageFiles([]);
   };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6">Add Banner</h2>
+      <h2 className="text-2xl font-bold mb-6">Upload Images</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title 1 Field */}
+        {/* Image Files Upload Field */}
         <div>
-          <label htmlFor="title1" className="block text-sm font-medium text-gray-700">
-            Title 1
+          <label htmlFor="imageFiles" className="block text-sm font-medium text-gray-700">
+            Select Images (You can select multiple)
           </label>
           <input
-            type="text"
-            id="title1"
-            value={title1}
-            onChange={(e) => setTitle1(e.target.value)}
+            type="file"
+            id="imageFiles"
+            accept="image/*"
+            onChange={handleImageChange}
             className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
-        </div>
-
-        {/* Title 2 Field */}
-        <div>
-          <label htmlFor="title2" className="block text-sm font-medium text-gray-700">
-            Title 2
-          </label>
-          <input
-            type="text"
-            id="title2"
-            value={title2}
-            onChange={(e) => setTitle2(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-          />
-        </div>
-
-        {/* Description Field */}
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-            required
-            rows="4"
-          />
-        </div>
-
-        {/* Image Link Field */}
-        <div>
-          <label htmlFor="imageLink" className="block text-sm font-medium text-gray-700">
-            Image Link
-          </label>
-          <input
-            type="text"
-            id="imageLink"
-            value={imageLink}
-            onChange={handleImageLinkChange}
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            multiple
             required
           />
         </div>
@@ -96,8 +100,9 @@ function AddBanner() {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+          disabled={loading}
         >
-          Add Banner
+          {loading ? 'Uploading Images...' : 'Upload Images'}
         </button>
       </form>
 

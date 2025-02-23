@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import useAxiosPublic from "./useAxiosPublic"
 
-function useTask() {
+function useReview() {
   const axiosPublic = useAxiosPublic()
   const {data : reviews = [],refetch} = useQuery({
     queryKey:['reviews'],
@@ -13,4 +13,4 @@ function useTask() {
   return [reviews,refetch]
 }
 
-export default useTask
+export default useReview
