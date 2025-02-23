@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { Menu, X, Home, Settings, User, Image, Star, Grid, Plus } from "lucide-react"; // Replace Banner with Image
+import { Menu, X, Home,  User, Image, Star, Grid, Plus } from "lucide-react"; // Replace Banner with Image
+import useAdmin from "../../hooks/useAdmin";
 
 function Dashboard() {
+  const [isAdmin] = useAdmin()
   // todo
-  const isAdmin = true
+  // const isAdmin = true
+  console.log(isAdmin)
   const [isOpen, setIsOpen] = useState(false);
 
   return (
