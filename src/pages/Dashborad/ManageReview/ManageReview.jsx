@@ -37,7 +37,7 @@ function ManageReview() {
         {reviews.map((review) => (
           <li key={review._id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
             <div style={{ marginRight: '10px' }}>
-              <img src={review.image} alt={review.name} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+              <img src={review.photos} alt={review.name} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
             </div>
             <div style={{ flex: 1 }}>
               <p><strong>Name:</strong> {review.name}</p>

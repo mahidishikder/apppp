@@ -4,6 +4,7 @@ import Review from '../../components/Review/Review';
 import OurTeam from '../../components/OurTeam/OurTeam';
 import Download from '../../components/Download/Download';
 import Video from '../../components/Video/Video';
+import UserCount from '../../components/UserCount/UserCount';
 
 
 function Home() {
@@ -17,6 +18,7 @@ function Home() {
       <OurTeam />
       <Download />
       <Video></Video>
+      <UserCount></UserCount>
       <div>
       <div>
       <section id="home" >

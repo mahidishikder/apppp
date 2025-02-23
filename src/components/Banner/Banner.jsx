@@ -8,9 +8,9 @@ import "swiper/css/pagination";
 import useBanner from "../../hooks/useBanner";
 
 const Banner = () => {
-  const [imagesB, refetch] = useBanner(); // API থেকে ডাটা নিচ্ছি
+  const [imagesB, refetch] = useBanner(); // Fetching Data from API
 
-  // ✅ ঠিকমতো Image URLs বের করা
+  // ✅ Extracting Image URLs correctly
   const imageUrls =
     imagesB && Array.isArray(imagesB)
       ? imagesB.flatMap((item) =>
@@ -18,7 +18,7 @@ const Banner = () => {
         )
       : [];
 
-  console.log("✅ Extracted Image URLs:", imageUrls); // Debugging জন্য
+  console.log("✅ Extracted Image URLs:", imageUrls); // Debugging Purpose
 
   return (
     <div
@@ -29,9 +29,10 @@ const Banner = () => {
           "url('https://img.freepik.com/free-photo/lilac-acrylic-texture-background-wallpaper_53876-104015.jpg?t=st=1740202514~exp=1740206114~hmac=6cf7699c2949083ff099e53ff79f17741326f332aeab8a2eeeae8488d2ddbbd0&w=1060')",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-16 lg:py-44 flex flex-col-reverse md:flex-row items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 pb-16 pt-24 sm:pt-36 lg:pb-44  lg:pt-56 flex flex-col md:flex-row items-center justify-between">
+        
         {/* Left Side - Text Content */}
-        <div className="w-full md:w-1/2 text-center md:text-left">
+        <div className="w-full md:w-1/2 text-center md:text-left py-18 lg:py-0 mb-8 md:mb-0">
           <h1 className="lg:text-5xl text-4xl font-bold md:font-extrabold mb-6 leading-tight">
             CODE NEXUS
             <br />
@@ -63,10 +64,10 @@ const Banner = () => {
               slidesPerView={1}
               loop={true}
               autoplay={{
-                delay: 2000, // ✅ 2 সেকেন্ড পর পর চেঞ্জ হবে
-                disableOnInteraction: false, // ইউজার ক্লিক করলেও চলতে থাকবে
+                delay: 2000, // ✅ Change slides every 2 seconds
+                disableOnInteraction: false, // Even if user interacts, autoplay continues
               }}
-              modules={[Autoplay]} // ✅ Autoplay Module ঠিকমতো যোগ করা হয়েছে
+              modules={[Autoplay]} // ✅ Correctly added Autoplay Module
               className="max-w-xs md:max-w-md"
             >
               {imageUrls.map((url, index) => (
@@ -74,7 +75,7 @@ const Banner = () => {
                   <img
                     src={url}
                     alt={`Slide ${index + 1}`}
-                    className="w-full h-auto rounded-lg shadow-lg"
+                    className="w-full h-auto rounded-lg "
                   />
                 </SwiperSlide>
               ))}

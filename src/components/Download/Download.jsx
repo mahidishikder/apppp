@@ -29,7 +29,7 @@ function Download() {
             >
               Do you love the app and want to make money? What <br /> are you waiting for? Download the app now and start earning!
             </motion.p>
-             <button className="btn btn-primary px-20 py-6  rounded-full">
+             <button className="btn btn-primary px-20 py-4  mb-10 lg:mb-0 md:py-5  rounded-full">
                          DOWNLOAD APK <GoArrowUpRight className="text-2xl" />
                        </button>
           </div>

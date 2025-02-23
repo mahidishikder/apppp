@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 function Video() {
-  const [videoUrl, setVideoUrl] = useState('https://youtu.be/OOhNmskVbQw?si=gRxkS7wjjWsdUfw6');
+  const [videoUrl, setVideoUrl] = useState('https://youtu.be/6OSupRkL2LQ?si=2W725wP4lUghvPOM');
 
   useEffect(() => {
     // Fetch the video URL from the backend (replace with your API endpoint)

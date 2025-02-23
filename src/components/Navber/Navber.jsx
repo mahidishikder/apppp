@@ -1,38 +1,30 @@
-import { useContext, useState } from "react";
+import { useState, useContext } from "react";
 import { RiMenu3Fill, RiCloseLine } from "react-icons/ri";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "../Navber/style.css";
+import '../Navber/style.css';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState(""); // Track active section
   const { user, signOutUser } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavigation = (section) => {
-    setIsMenuOpen(false); // Close menu on navigation (mobile UX improvement)
-    if (location.pathname !== "/") {
-      navigate("/"); 
-      setTimeout(() => {
-        document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleNavigation = (sectionId) => {
+    setIsMenuOpen(false); // Close the menu after selection (for mobile UX)
+    setActiveSection(sectionId); // Update active section
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleLogout = async () => {
     try {
       await signOutUser();
       toast.success("Logout successful!");
-      navigate("/login");
     } catch (error) {
       toast.error("Logout failed!");
       console.error(error);
@@ -51,41 +43,41 @@ function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex space-x-5 items-center">
-            {/* Home Link */}
             <span
-              onClick={() => handleNavigation('home')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "home" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("home")}
             >
               HOME
             </span>
-
-            {/* Download Link */}
             <span
-              onClick={() => handleNavigation('download')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "download" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("download")}
             >
               DOWNLOAD
             </span>
-
-            {/* Review Link */}
             <span
-              onClick={() => handleNavigation('review')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "review" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("review")}
             >
               REVIEW
             </span>
-
-            {/* Our Team Link */}
             <span
-              onClick={() => handleNavigation('ourTeam')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "ourTeam" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("ourTeam")}
             >
               OUR TEAM
             </span>
 
             {user ? (
               <div className="flex items-center space-x-3">
-                {/* Profile Image with Link to Dashboard */}
                 <NavLink to="/dashboard">
                   <img src={user.photoURL} alt="User Avatar" className="h-8 w-8 rounded-full cursor-pointer" />
                 </NavLink>
@@ -109,34 +101,35 @@ function Navbar() {
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
           <div className="lg:hidden absolute top-16 left-0 w-full bg-gray-100 shadow-md p-5 z-50 flex flex-col items-center space-y-5">
-            {/* Home Link */}
             <span
-              onClick={() => handleNavigation('home')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "home" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("home")}
             >
               HOME
             </span>
-
-            {/* Download Link */}
             <span
-              onClick={() => handleNavigation('download')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "download" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("download")}
             >
               DOWNLOAD
             </span>
-
-            {/* Review Link */}
             <span
-              onClick={() => handleNavigation('review')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "review" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("review")}
             >
               REVIEW
             </span>
-
-            {/* Our Team Link */}
             <span
-              onClick={() => handleNavigation('ourTeam')}
-              className="text-gray-600 cursor-pointer transition-colors duration-300 hover:text-blue-600"
+              className={`cursor-pointer transition-colors duration-300 ${
+                activeSection === "ourTeam" ? "text-blue-600" : "text-gray-600"
+              }`}
+              onClick={() => handleNavigation("ourTeam")}
             >
               OUR TEAM
             </span>
